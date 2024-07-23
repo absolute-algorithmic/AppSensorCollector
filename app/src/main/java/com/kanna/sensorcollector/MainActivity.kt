@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val serverUri = URI("ws://192.168.1.107:8080") // IPV4 URI
+        val serverUri = URI("ws://127.0.0.1:8080") // IPV4 URI
         webSocketClient = WebSocketClient(serverUri)
 
         webSocketClient.connect()
