@@ -1,4 +1,4 @@
-This WebSocket server is inspired by the library [AndroidSensorCollector](https://jitpack.io/#ignassew/AndroidSensorCollector) - [Github](https://github.com/ignassew/AndroidSensorCollector)
+App inspired by the library [AndroidSensorCollector](https://jitpack.io/#ignassew/AndroidSensorCollector) - [Github](https://github.com/ignassew/AndroidSensorCollector)
 
 # What data is being collected
 
