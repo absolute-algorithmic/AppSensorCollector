@@ -17,6 +17,7 @@ import org.json.JSONObject
 import java.net.URI
 import java.security.MessageDigest
 
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var webSocketClient: WebSocketClient
@@ -26,7 +27,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val serverUri = URI("ws://192.168.1.103:8080") // IPV4 URI
+        val serverUri = URI("ws://192.168.100.22:8080") // IPV4 URI
         webSocketClient = WebSocketClient(serverUri)
 
         webSocketClient.connect()
@@ -121,7 +122,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         override fun onSensorChanged(event: SensorEvent) {
-            val sendableEvent = SendableSensorEvent(event)
+            val sendableEvent = SendableSensorEvent(systemInfo.id, event)
             val lastEventTimestamp = this.lastSensors[sendableEvent.type]?.timestamp ?: 0
 
             if (sendableEvent.timestamp - lastEventTimestamp >= 100e6) {
@@ -132,7 +133,7 @@ class MainActivity : AppCompatActivity() {
                 eventsSent[sendableEvent.type] = newCount
             }
 
-            if (eventsSent.values.all { it >= 1000 }) {
+            if (eventsSent.values.all { it >= 50 }) {
                 this.stop()
             }
         }
@@ -141,6 +142,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     internal data class SendableSensorEvent(
+        val id: String,
         val messageType: String,
         val timestamp: Long,
         val accuracy: Int,
@@ -149,7 +151,8 @@ class MainActivity : AppCompatActivity() {
         val y: Float,
         val z: Float
     ) {
-        constructor(sensorEvent: SensorEvent) : this(
+        constructor(id: String, sensorEvent: SensorEvent) : this(
+            id,
             "sensor",
             sensorEvent.timestamp,
             sensorEvent.accuracy,
